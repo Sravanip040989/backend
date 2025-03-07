@@ -11,54 +11,10 @@ pipeline {
         choice(name: 'action', choices: ['apply', 'Destroy'], description: 'pick something')
     }
     stages {
-        stage('Init') {
+        stage('test') {
             steps {
                sh """
-                cd 01-vpc
-                terraform init -reconfigure
-               """
-            }
-        }
-        stage('Plan') {
-            when {
-                expression{
-                    params.action == 'Apply'
-                }
-            }
-            steps {
-                sh """
-                 cd 01-vpc
-                 terraform plan
-               """
-            }
-        }
-        stage('Deploy') {
-            when {
-                expression{
-                    params.action == 'Apply'
-                }
-            }
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-            }
-            steps {
-                sh """
-                 cd 01-vpc
-                 terraform apply -auto-approve
-               """
-            }
-        }
-        stage('Destroy') {
-            when {
-                expression{
-                    params.action == 'Destroy'
-                }
-            }
-            steps {
-                sh """
-                 cd 01-vpc
-                 terraform Destroy -auto-approve
+                 echo "this is testing"
                """
             }
         }
